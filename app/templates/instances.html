@@ -1,1 +1,55 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>EC2 Instances (TZ: {{ tz }})</h2>
 
+<form method="post" action="/stop-selected">
+  <label><input type="checkbox" name="dry_run"> Dry-run (no real stop)</label>
+  <br><br>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Select (Non-Prod only)</th>
+        <th>Name</th>
+        <th>InstanceId</th>
+        <th>Environment</th>
+        <th>State</th>
+        <th>Type</th>
+        <th>AZ</th>
+        <th>Private IP</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in instances %}
+      <tr>
+        <td>
+          {% if i.Environment == "Non-Prod" %}
+            <input type="checkbox" name="instance_ids" value="{{ i.InstanceId }}">
+          {% else %}
+            —
+          {% endif %}
+        </td>
+        <td>{{ i.Name }}</td>
+        <td>{{ i.InstanceId }}</td>
+        <td>
+          {% if i.Environment == "Non-Prod" %}
+            <span class="badge np">Non-Prod</span>
+          {% else %}
+            <span class="badge other">{{ i.Environment or "Unknown" }}</span>
+          {% endif %}
+        </td>
+        <td>{{ i.State }}</td>
+        <td>{{ i.InstanceType }}</td>
+        <td>{{ i.AZ }}</td>
+        <td>{{ i.PrivateIp }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <br>
+  <button type="submit" style="padding:10px 14px;border:0;border-radius:6px;background:#1976d2;color:#fff;">
+    Stop Selected Non-Prod Instances (Async)
+  </button>
+</form>
+{% endblock %}

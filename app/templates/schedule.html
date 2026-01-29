@@ -1,1 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Scheduler (TZ: {{ tz }})</h2>
 
+<h3>Run once after N minutes (UI)</h3>
+<form method="post" action="/schedule-once">
+  <label>Minutes: <input name="minutes" type="number" min="1" value="1"></label>
+  <label style="margin-left:12px;"><input type="checkbox" name="dry_run"> Dry-run</label>
+  <br><br>
+  <button type="submit">Schedule Stop Job</button>
+</form>
+
+<hr>
+
+<h3>Run now</h3>
+<form method="post" action="/run-now">
+  <label><input type="checkbox" name="dry_run"> Dry-run</label>
+  <br><br>
+  <button type="submit">Run Now</button>
+</form>
+
+{% endblock %}

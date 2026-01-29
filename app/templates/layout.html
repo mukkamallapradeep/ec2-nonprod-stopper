@@ -1,1 +1,36 @@
+<!doctype html>
+<html>
+<head>
+  <title>EC2 Non-Prod Stopper</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 18px; }
+    a { margin-right: 12px; }
+    .badge { padding: 2px 8px; border-radius: 10px; font-size: 12px; border: 1px solid #ddd; }
+    .np { background: #e6ffed; border-color: #b7ebc6; }
+    .other { background: #ffecec; border-color: #f3b3b3; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border-bottom: 1px solid #eee; padding: 10px; text-align: left; }
+    .flash { padding: 10px; margin: 10px 0; border-radius: 6px; }
+    .success { background: #e6ffed; }
+    .warning { background: #fff4e5; }
+  </style>
+</head>
+<body>
+  <div>
+    <a href="/instances">Instances</a>
+    <a href="/schedule">Scheduler</a>
+  </div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        <div class="flash {{ category }}">{{ msg }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</body>
+</html>
 
